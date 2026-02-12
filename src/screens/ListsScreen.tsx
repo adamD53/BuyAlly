@@ -3,7 +3,7 @@ import { ListsHeader } from "../components/organisms/ListsHeader";
 import { ListsContent } from "../components/organisms/ListsContent";
 import { ListsFooter } from "../components/organisms/ListsFooter";
 
-export default function ListScreen () {
+export default function ListsScreen () {
   return (
     <View style={styles.container}>
       <ListsHeader />

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 const SafeView = ({ children }: any) => {
   const insets = useSafeAreaInsets();
@@ -8,10 +9,12 @@ const SafeView = ({ children }: any) => {
 }
 
 export function ListsHeader () {
+  const router = useRouter();
+
   return (
     <SafeView>
       <Text style={styles.headerText}>Lists</Text>
-      <Text style={styles.addText} >Add List</Text>
+      <Text style={styles.addText} onPress={() => router.navigate("/addList")}>Add List</Text>
     </SafeView>
   );
 }
@@ -28,10 +31,11 @@ const styles = StyleSheet.create({
   headerText: {
     color: "#111111",
     fontSize: 30,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   addText: {
-    color: "blue"
+    color: "blue",
+    cursor: "pointer"
   }
 })
