@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import AddListScreen from '../src/screens/AddListScreen';
+import AddListModal from '../src/screens/AddListModal';
 
 export default function AddList () {
   return (
     <View style={styles.container}>
-      <AddListScreen />
+      <AddListModal />
     </View>
   );
 }

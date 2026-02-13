@@ -14,8 +14,8 @@ export function AddListHeader () {
   return (
     <SafeView>
       <View style={styles.textButtons}>
-        <Text style={styles.refText} onPress={() => router.navigate("/")}>Cancel</Text>
-        <Text style={styles.refText} onPress={() => router.navigate("/")}>Done</Text>
+        <Text style={styles.refText} onPress={() => router.back()}>Cancel</Text>
+        <Text style={styles.refText} onPress={() => router.back()}>Done</Text>
       </View>
       <Text style={styles.headerText}>Add List</Text>
     </SafeView>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    padding: 30,
+    padding: 20,
     gap: 20
   },
 
@@ -47,8 +47,6 @@ const styles = StyleSheet.create({
     color: "#111111",
     fontSize: 30,
     fontWeight: "bold",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
     width: "100%"
   },
 })
