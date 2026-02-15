@@ -1,5 +1,6 @@
-import { View, StyleSheet, FlatList, Image } from "react-native";
+import { View, StyleSheet, FlatList, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useAddList } from "@/src/store/storeAddList";
 
 interface IColorItem {
   id: string,
@@ -9,21 +10,39 @@ interface IColorItem {
 
 interface IIconItem {
   id: string,
-  name: any
+  icon: any,
   type: "icon"
 }
 
 export type GridItem = IColorItem | IIconItem;
 
-const Item = ({ item }: { item: GridItem }) => {
+function Item({ item }: { item: GridItem }) {
+  const setColor = useAddList((state) => state.setColor);
+  const colorState = useAddList((state) => state.color);
+  const setIcon = useAddList((state) => state.setIcon);
+  const iconState = useAddList((state) => state.icon);
+
   return (
-    <View style={styles.item}>
+    <Pressable 
+      style={styles.item} 
+      onPress={() => item.type == "color" ? setColor(item.color) : setIcon(item.icon)}>
       {item.type == "color" ? (
-        <View style={{ backgroundColor: item.color, ...styles.circle }} />
+        <View style={{...styles.checkedContainer, borderColor: colorState == item.color ? item.color : "transparent"}}>
+          <View 
+          style={{ 
+              ...styles.colorIcon, 
+              backgroundColor: item.color, 
+              borderColor: (colorState == item.color ? "black" : "transparent") }}
+          />
+        </View>
       ) : (
-        <View style={styles.image}><MaterialIcons name={item.name} size={24} color="#565656" /></View>
+        <View style={{...styles.checkedContainer, borderColor: iconState == item.icon ? item.icon : "transparent"}}>
+          <View style={styles.imageIcon}>
+            <MaterialIcons name={item.icon} size={24} color="#565656" />
+          </View>
+        </View>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -33,7 +52,8 @@ export function MenuGrid ({ data }: { data: GridItem[] }) {
       <FlatList 
         data={data}
         numColumns={6}
-        renderItem={Item}
+        renderItem={({ item }) => <Item item={item}></Item>}
+        keyExtractor={(item) => item.id}
         scrollEnabled={false}
       />
     </View>
@@ -51,21 +71,30 @@ const styles = StyleSheet.create({
     maxWidth: "16%", 
     height: 40,
     marginVertical: 10,
-    marginRight: 20
+    marginRight: 20,
   },
 
-  circle: {
+  checkedContainer: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "100%",
+    borderWidth: 1,
+    borderColor: "transparent",
+    padding: 1.5
+  },
+
+  colorIcon: {
     width: "100%",
     height: "100%",
     borderRadius: "100%",
   },
 
-  image: {
+  imageIcon: {
     width: "100%",
     height: "100%",
     borderRadius: "100%",
     backgroundColor: "#E5E5E5",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   }
 })

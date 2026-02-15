@@ -1,15 +1,16 @@
+import { useAddList } from "@/src/store/storeAddList";
 import { TextInput, View, StyleSheet } from "react-native";
-import { useState } from "react";
 
 export function AddListInput () {
-  const [input, setInput] = useState("");
+  const input = useAddList((state) => state.input);
+  const setInput = useAddList((state) => state.setInput);
 
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="New list"
+        placeholder="New list"  
         style={styles.textInput}
-        onChangeText={setInput}
+        onChangeText={(text) => setInput(text)}
         value={input}
       />
     </View>

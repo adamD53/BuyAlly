@@ -1,21 +1,32 @@
+import { useAddList } from "@/src/store/storeAddList";
 import { useRouter } from "expo-router";
 import { View, StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { IListData } from "@/src/store/storeAddList";
 
 const SafeView = ({ children }: any) => {
   const insets = useSafeAreaInsets();
-
   return <View style={ [styles.container, { paddingTop: insets.top + 30}]}>{ children }</View>
 }
 
+export const newListData: IListData[] = []
+
 export function AddListHeader () {
   const router = useRouter();
+  const addTask = useAddList((state) => state.addTask);
+  const resetState = useAddList((state) => state.resetState);
+
+  const handleAddTask = () => {
+    addTask();
+    resetState();
+    router.back();
+  }
 
   return (
     <SafeView>
       <View style={styles.textButtons}>
         <Text style={styles.refText} onPress={() => router.back()}>Cancel</Text>
-        <Text style={styles.refText} onPress={() => router.back()}>Done</Text>
+        <Text style={styles.refText} onPress={handleAddTask}>Done</Text>
       </View>
       <Text style={styles.headerText}>Add List</Text>
     </SafeView>
