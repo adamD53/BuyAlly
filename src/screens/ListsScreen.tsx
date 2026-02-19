@@ -1,13 +1,13 @@
 import { View, StyleSheet } from "react-native";
 import { ListsHeader } from "../components/molecules/ListsHeader";
-import { ListsContent } from "../components/organisms/ListsContent";
+import { ListElements } from "../components/organisms/ListElements";
 import { ListsFooter } from "../components/organisms/ListsFooter";
 
 export default function ListsScreen() {
   return (
     <View style={styles.container}>
       <ListsHeader />
-      <ListsContent />
+      <ListElements />
       <ListsFooter />
     </View>
   );

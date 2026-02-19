@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { View, StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextButton } from "../atoms/TextButton";
@@ -15,8 +15,6 @@ const SafeView = ({ children }: any) => {
 }
 
 export function ModalHeader({ onSubmit, title, fontColor }: IModalHeaderProps) {
-  const router = useRouter();
-
   return (
     <SafeView>
       <View style={{ ...styles.textButtons }}>

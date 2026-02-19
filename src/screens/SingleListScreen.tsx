@@ -1,11 +1,12 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { SingleListHeader } from "../components/molecules/SingleListHeader";
+import { ProductList } from "../components/organisms/ProductList";
 
 export default function SingleListScreen() {
   return (
     <View style={styles.container}>
       <SingleListHeader />
-      <Text>Empty list</Text>
+      <ProductList />
     </View>
   );
 }

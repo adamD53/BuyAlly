@@ -3,18 +3,17 @@ import { ModalHeader } from "../components/molecules/ModalHeader";
 import { Input } from "../components/molecules/Input";
 import { AddListMenu } from "../components/molecules/AddListMenu";
 import { useList } from "../store/storeList";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export default function AddListModal() {
   const input = useList((state) => state.input);
   const setInput = useList((state) => state.setInput);
   const addList = useList((state) => state.addList);
-  const resetState = useList((state) => state.resetState);
-  const router = useRouter();
+  const resetListState = useList((state) => state.resetState);
 
   const handleAddTask = () => {
     addList();
-    resetState();
+    resetListState();
     router.back();
   }
 

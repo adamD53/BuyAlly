@@ -1,10 +1,8 @@
 import { Text, View, StyleSheet } from "react-native";
 import { TextButton } from "../atoms/TextButton";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export function SingleListHeader() {
-  const router = useRouter();
-
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>List title</Text>

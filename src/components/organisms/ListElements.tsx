@@ -2,7 +2,7 @@ import { View, StyleSheet, FlatList, Text } from "react-native";
 import { ListItem } from "../molecules/ListItem";
 import { useList } from "@/src/store/storeList";
 
-export function ListsContent() {
+export function ListElements() {
   const listData = useList((state) => state.lists);
 
   return (
