@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
-import { ListsHeader } from "../components/organisms/ListsHeader";
+import { ListsHeader } from "../components/molecules/ListsHeader";
 import { ListsContent } from "../components/organisms/ListsContent";
 import { ListsFooter } from "../components/organisms/ListsFooter";
 
-export default function ListsScreen () {
+export default function ListsScreen() {
   return (
     <View style={styles.container}>
       <ListsHeader />
@@ -14,11 +14,11 @@ export default function ListsScreen () {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "#fff",
-      alignItems: "center",
-      flex: 1,
-      gap: 20,
-      width: "100%"
-    }
+  container: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    flex: 1,
+    gap: 20,
+    width: "100%"
+  }
 })

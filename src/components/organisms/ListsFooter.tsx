@@ -1,26 +1,42 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FooterButton } from "../atoms/FooterButton";
 
 const SafeView = ({ children }: any) => {
   const insets = useSafeAreaInsets();
-
-  return <View style={ [styles.container, { paddingBottom: insets.bottom}]}>{ children }</View>
+  return <View style={[styles.container, { paddingBottom: insets.bottom }]}>{children}</View>
 }
 
-export function ListsFooter () {
+export function ListsFooter() {
   return (
     <SafeView>
-      <Text>This is footer text</Text> 
+      <FooterButton title="Lists" icon="list" />
+      <FooterButton title="Trash" icon="trash" />
+      <FooterButton title="Settings" icon="settings" />
     </SafeView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
+    paddingTop: 15,
     width: "100%",
     backgroundColor: "#F8F8F8",
     borderTopColor: "grey",
-    borderTopWidth: .5
+    borderTopWidth: .5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
+  icon: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 3
+  },
+
+  iconText: {
+    color: "#8e8e93"
   }
 })

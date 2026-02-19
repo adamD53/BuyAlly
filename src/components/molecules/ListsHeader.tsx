@@ -1,20 +1,20 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { TextButton } from "../atoms/TextButton";
 
 const SafeView = ({ children }: any) => {
   const insets = useSafeAreaInsets();
-
-  return <View style={ [styles.container, { paddingTop: insets.top + 30}]}>{ children }</View>
+  return <View style={[styles.container, { paddingTop: insets.top + 30 }]}>{children}</View>
 }
 
-export function ListsHeader () {
+export function ListsHeader() {
   const router = useRouter();
 
   return (
     <SafeView>
       <Text style={styles.headerText}>Lists</Text>
-      <Text style={styles.addText} onPress={() => router.navigate("/addList")}>Add List</Text>
+      <TextButton onPress={() => router.navigate("/addList")} title="Add list" />
     </SafeView>
   );
 }
@@ -36,6 +36,5 @@ const styles = StyleSheet.create({
 
   addText: {
     color: "blue",
-    cursor: "pointer"
   }
 })

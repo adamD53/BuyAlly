@@ -1,16 +1,16 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
-import { ListItem } from "../molecules/ListItem";
-import { useList } from "@/src/store/storeList";
+import { Product } from "../molecules/Product";
+import { useProduct } from "@/src/store/storeProduct";
 
-export function ListsContent() {
-  const listData = useList((state) => state.lists);
+export function ProductList() {
+  const productsData = useProduct((state) => state.products);
 
   return (
     <View style={styles.container}>
-      {listData.length == 0 && <Text style={styles.text}>No lists</Text>}
+      {productsData.length == 0 && <Text style={styles.text}>No products</Text>}
       <FlatList
-        data={listData}
-        renderItem={({ item }) => <ListItem title={item.title} color={item.color} icon={item.icon} />}
+        data={productsData}
+        renderItem={({ item }) => <Product title={item.title} quantity={item.quantity} id={item.id} />}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
       />
