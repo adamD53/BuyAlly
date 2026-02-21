@@ -7,15 +7,15 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="addList" options={{ presentation: "modal" }} />
-        <Stack.Screen 
-          name="list" 
-          options={{ 
-            headerShown: true, 
-            headerBackVisible: true, 
-            headerTitle: "", 
-            headerBackTitle: "Back" 
-          }} 
-          />
+        <Stack.Screen
+          name="lists/[id]"
+          options={{
+            headerShown: true,
+            headerBackVisible: true,
+            headerTitle: "",
+            headerBackTitle: "Back"
+          }}
+        />
         <Stack.Screen name="addProduct" options={{ presentation: "modal" }} />
       </Stack>
     </SafeAreaProvider>

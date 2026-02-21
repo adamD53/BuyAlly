@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import AddProductModal from "../src/screens/AddProductModal"
+import AddProductModal from "../../src/screens/AddProductModal";
 
 export default function AddList () {
   return (

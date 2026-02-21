@@ -5,20 +5,24 @@ interface addProductProps {
   input: string;
   quantity: string;
   note: string;
-  products: IProductData[];
+  products: IProductMap[];
   setInput: (input: string) => void;
   setQuantity: (quantity: string) => void;
   setNote: (note: string) => void;
-  addProduct: () => void;
+  addProduct: () => string;
   resetState: () => void;
   toggleProduct: (id: string) => void;
 }
 
-interface IProductData {
+export interface IProductData {
   title: string;
   quantity: string;
-  id: string;
   checked: boolean;
+}
+
+interface IProductMap {
+  id: string;
+  product: IProductData;
 }
 
 export const useProduct = create<addProductProps>((set, get) => ({
@@ -30,19 +34,28 @@ export const useProduct = create<addProductProps>((set, get) => ({
   setNote: (note) => set(() => ({ note: note })),
   setQuantity: (quantity) => set(() => ({ quantity: quantity })),
   addProduct: () => {
-    const newProduct = {
-      title: get().input,
-      quantity: get().quantity,
-      id: nanoid(),
-      checked: false,
+    const id = nanoid();
+    const newProduct: IProductMap = {
+      id: id,
+      product: {
+        title: get().input,
+        quantity: get().quantity,
+        checked: false,
+      },
     };
     set(() => ({ products: [...get().products, newProduct] }));
+    return id;
   },
   resetState: () => set(() => ({ input: "", quantity: "", note: "" })),
   toggleProduct: (id) =>
     set((state) => ({
       products: state.products.map((prod) =>
-        prod.id === id ? { ...prod, checked: !prod.checked } : prod,
+        prod.id === id
+          ? {
+              ...prod,
+              product: { ...prod.product, checked: !prod.product.checked },
+            }
+          : prod,
       ),
     })),
 }));

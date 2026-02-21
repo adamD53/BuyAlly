@@ -1,17 +1,20 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { Product } from "../molecules/Product";
-import { useProduct } from "@/src/store/storeProduct";
+import { useList } from "@/src/store/storeList";
+import { useLocalSearchParams } from "expo-router";
 
 export function ProductList() {
-  const productsData = useProduct((state) => state.products);
+  const { id } = useLocalSearchParams();
+  const cleanId = id.toString().slice(1, -1);
+  const productsData = useList((state) => state.lists.find((list) => list.id === cleanId)?.productIds);
 
   return (
     <View style={styles.container}>
-      {productsData.length == 0 && <Text style={styles.text}>No products</Text>}
+      {productsData?.length == 0 && <Text style={styles.text}>No products</Text>}
       <FlatList
         data={productsData}
-        renderItem={({ item }) => <Product title={item.title} quantity={item.quantity} id={item.id} />}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Product productId={item} />}
+        keyExtractor={(item) => item}
         contentContainerStyle={styles.list}
       />
     </View>

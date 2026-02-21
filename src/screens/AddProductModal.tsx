@@ -3,20 +3,19 @@ import { ModalHeader } from "../components/molecules/ModalHeader";
 import { Input } from "../components/molecules/Input";
 import { useProduct } from "../store/storeProduct";
 import { router } from "expo-router";
+import { useList } from "../store/storeList";
+import { useLocalSearchParams } from "expo-router";
 
 export default function AddProductModal() {
-  const input = useProduct((state) => state.input);
-  const quantity = useProduct((state) => state.quantity);
-  const note = useProduct((state) => state.note);
-  const setInput = useProduct((state) => state.setInput);
-  const setQuantity = useProduct((state) => state.setQuantity);
-  const setNote = useProduct((state) => state.setNote);
-  const addProduct = useProduct((state) => state.addProduct);
-  const resetProductState = useProduct((state) => state.resetState)
+  const { input, quantity, note, setInput, setQuantity, setNote, addProduct, resetState } = useProduct();
+  const { addProductToList } = useList();
+  const { listId } = useLocalSearchParams();
 
   const handleAddProduct = () => {
-    addProduct();
-    resetProductState(); 
+    const newProductId = addProduct();
+    addProductToList(listId, newProductId);
+    console.debug(`Added product with id ${newProductId} to list of id ${listId}`);
+    resetState();
     router.back();
   }
 

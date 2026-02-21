@@ -1,18 +1,22 @@
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 interface IListItemProps {
   title: string,
   icon: any,
-  color: string
+  color: string,
+  id: string
 }
 
-export function ListItem({ title, icon, color }: IListItemProps) {
-  const router = useRouter();
+export function ListItem({ title, icon, color, id }: IListItemProps) {
+  const openList = () => {
+    console.log(`Switching to ${id}`);
+    router.navigate(`lists/[${id}]`);
+  }
 
   return (
-    <Pressable style={styles.container} onPress={() => router.navigate("/list")}>
+    <Pressable style={styles.container} onPress={openList}>
       <View style={{ ...styles.icon, backgroundColor: color }}><MaterialIcons name={icon} size={24} color="#FFFFFF" /></View>
       <Text style={{ fontSize: 20, fontWeight: 600 }}>{title}</Text>
     </Pressable>
