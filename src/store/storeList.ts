@@ -41,13 +41,13 @@ export const useList = create<addListProps>((set, get) => ({
     };
     set(() => ({ lists: [...get().lists, newList] }));
   },
-  addProductToList: (listId, productId) => 
+  addProductToList: (listId, productId) =>
     set((state) => ({
-      lists: state.lists.map((list) => 
-        list.id === listId 
-          ? { ...list, productIds: [...list.productIds, productId] } 
-          : list
-      )
+      lists: state.lists.map((list) =>
+        list.id === listId
+          ? { ...list, productIds: [...list.productIds, productId] }
+          : list,
+      ),
     })),
   resetState: () =>
     set(() => ({ input: "", color: "grey", icon: "disabled-by-default" })),
