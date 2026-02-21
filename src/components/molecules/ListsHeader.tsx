@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { TextButton } from "../atoms/TextButton";
 
 const SafeView = ({ children }: any) => {
@@ -9,8 +9,6 @@ const SafeView = ({ children }: any) => {
 }
 
 export function ListsHeader() {
-  const router = useRouter();
-
   return (
     <SafeView>
       <Text style={styles.headerText}>Lists</Text>
