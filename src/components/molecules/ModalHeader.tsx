@@ -9,7 +9,7 @@ interface IModalHeaderProps {
   fontColor?: string
 }
 
-const SafeView = ({ children }: any) => {
+const SafeView = ({ children }: { children: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
   return <View style={[styles.container, { paddingTop: insets.top }]}>{children}</View>
 }

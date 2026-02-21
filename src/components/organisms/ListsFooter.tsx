@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FooterButton } from "../atoms/FooterButton";
 
-const SafeView = ({ children }: any) => {
+const SafeView = ({ children }: { children?: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
   return <View style={[styles.container, { paddingBottom: insets.bottom }]}>{children}</View>
 }
@@ -28,15 +28,4 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-
-  icon: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 3
-  },
-
-  iconText: {
-    color: "#8e8e93"
-  }
 })

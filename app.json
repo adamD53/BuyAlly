@@ -2,7 +2,7 @@
   "expo": {
     "name": "BuyAlly",
     "slug": "BuyAlly",
-    "scheme": "BuyAlly",
+    "scheme": "buy-ally",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,7 +31,8 @@
       "tsconfigPaths": true
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ]
   }
 }

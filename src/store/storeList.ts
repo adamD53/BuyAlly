@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
+import { MaterialIconType } from "../components/molecules/MenuGrid";
 
 interface addListProps {
   input: string;
   color: string;
-  icon: string;
+  icon: MaterialIconType;
   lists: IListData[];
   setInput: (input: string) => void;
   setColor: (color: string) => void;
-  setIcon: (icon: string) => void;
+  setIcon: (icon: MaterialIconType) => void;
   addList: () => void;
   addProductToList: (listId: string | string[], productId: string) => void;
   resetState: () => void;
@@ -16,7 +17,7 @@ interface addListProps {
 
 interface IListData {
   title: string;
-  icon: any;
+  icon: MaterialIconType;
   color: string;
   id: string;
   productIds: string[];

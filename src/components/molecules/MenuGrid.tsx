@@ -2,6 +2,8 @@ import { View, StyleSheet, FlatList, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useList } from "@/src/store/storeList";
 
+export type MaterialIconType = React.ComponentProps<typeof MaterialIcons>["name"];
+
 interface IColorItem {
   id: string,
   color: string,
@@ -10,14 +12,14 @@ interface IColorItem {
 
 interface IIconItem {
   id: string,
-  icon: any,
+  icon: MaterialIconType,
   type: "icon"
 }
 
 export type GridItem = IColorItem | IIconItem;
 
 function Item({ item }: { item: GridItem }) {
-  const { setColor, color, setIcon } = useList();
+  const { setColor, color, setIcon, icon } = useList();
 
   return (
     <Pressable
@@ -34,7 +36,7 @@ function Item({ item }: { item: GridItem }) {
           />
         </View>
       ) : (
-        <View style={{ ...styles.checkedContainer, borderColor: color == item.icon ? item.icon : "transparent" }}>
+        <View style={{ ...styles.checkedContainer, borderColor: icon == item.icon ? item.icon : "transparent" }}>
           <View style={styles.imageIcon}>
             <MaterialIcons name={item.icon} size={24} color="#565656" />
           </View>

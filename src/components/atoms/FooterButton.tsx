@@ -1,9 +1,10 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
+type FeatherIconType = React.ComponentProps<typeof Feather>["name"];
 interface IFooterButtonProps {
   title: string,
-  icon: any
+  icon: FeatherIconType
 }
 
 export function FooterButton({ title, icon }: IFooterButtonProps) {

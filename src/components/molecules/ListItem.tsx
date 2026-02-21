@@ -1,10 +1,11 @@
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { MaterialIconType } from "./MenuGrid";
 
 interface IListItemProps {
   title: string,
-  icon: any,
+  icon: MaterialIconType,
   color: string,
   id: string
 }

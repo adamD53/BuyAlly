@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { TextButton } from "../atoms/TextButton";
 
-const SafeView = ({ children }: any) => {
+const SafeView = ({ children }: { children?: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
   return <View style={[styles.container, { paddingTop: insets.top + 30 }]}>{children}</View>
 }
@@ -31,8 +31,4 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-
-  addText: {
-    color: "blue",
-  }
 })

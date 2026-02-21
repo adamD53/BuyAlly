@@ -16,7 +16,7 @@ export default function RootLayout() {
             headerBackTitle: "Back"
           }}
         />
-        <Stack.Screen name="addProduct" options={{ presentation: "modal" }} />
+        <Stack.Screen name="lists/addProduct" options={{ presentation: "modal" }} />
       </Stack>
     </SafeAreaProvider>
   );
