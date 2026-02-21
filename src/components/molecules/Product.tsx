@@ -10,17 +10,16 @@ export function Product({ productId }: IProductProps) {
   const isChecked = useProduct(({ products }) =>
     products.find((prod) => prod.id === productId)?.product.checked
   );
-  const toggleProduct = useProduct((state) => state.toggleProduct);
-  const title = useProduct((state) => state.products.find((prod) => prod.id === productId)?.product.title);
-  const quantity = useProduct((state) => state.products.find((prod) => prod.id === productId)?.product.quantity);
+  const { toggleProduct } = useProduct();
+  const product = useProduct((state) => state.products.find(p => p.id===productId));
 
   return (
     <Pressable style={styles.container} onPress={() => toggleProduct(productId)}>
       <View style={styles.checkIcon}>
         <Octicons name={isChecked ? "check-circle-fill" : "check-circle"} size={24} color="#5856d6" />
       </View>
-      <Text style={{ ...styles.titleText, textDecorationLine: (isChecked ? "line-through" : "none") }}>{title}</Text>
-      <Text style={styles.quantityText}>{quantity}</Text>
+      <Text style={{ ...styles.titleText, textDecorationLine: (isChecked ? "line-through" : "none") }}>{product?.product.title}</Text>
+      <Text style={styles.quantityText}>{product?.product.title}</Text>
     </Pressable>
   );
 }
