@@ -5,15 +5,17 @@ import { useLocalSearchParams } from "expo-router";
 
 export function ProductList() {
   const { id } = useLocalSearchParams();
-  const cleanId = id.toString().slice(1, -1);
-  const productsData = useList((state) => state.lists.find((list) => list.id === cleanId)?.productIds);
+  const cleanID = id.toString().slice(1, -1);
+  const productsData = useList(
+    (state) => state.lists.find((list) => list.id === cleanID)?.productIDs,
+  );
 
   return (
     <View style={styles.container}>
       {productsData?.length == 0 && <Text style={styles.text}>No products</Text>}
       <FlatList
         data={productsData}
-        renderItem={({ item }) => <Product productId={item} />}
+        renderItem={({ item }) => <Product productID={item} />}
         keyExtractor={(item) => item}
         contentContainerStyle={styles.list}
       />
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 3,
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   list: {
@@ -36,6 +38,6 @@ const styles = StyleSheet.create({
   text: {
     color: "grey",
     fontSize: 18,
-    fontWeight: 600
-  }
-})
+    fontWeight: 600,
+  },
+});

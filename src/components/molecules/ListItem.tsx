@@ -4,21 +4,22 @@ import { router } from "expo-router";
 import { MaterialIconType } from "./MenuGrid";
 
 interface IListItemProps {
-  title: string,
-  icon: MaterialIconType,
-  color: string,
-  id: string
+  title: string;
+  icon: MaterialIconType;
+  color: string;
+  id: string;
 }
 
 export function ListItem({ title, icon, color, id }: IListItemProps) {
   const openList = () => {
-    console.log(`Switching to ${id}`);
     router.navigate(`lists/[${id}]`);
-  }
+  };
 
   return (
     <Pressable style={styles.container} onPress={openList}>
-      <View style={{ ...styles.icon, backgroundColor: color }}><MaterialIcons name={icon} size={24} color="#FFFFFF" /></View>
+      <View style={{ ...styles.icon, backgroundColor: color }}>
+        <MaterialIcons name={icon} size={24} color="#FFFFFF" />
+      </View>
       <Text style={{ fontSize: 20, fontWeight: 600 }}>{title}</Text>
     </Pressable>
   );
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: 15
+    borderRadius: 15,
   },
 
   icon: {
@@ -40,6 +41,6 @@ const styles = StyleSheet.create({
     borderRadius: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 15
-  }
-})
+    marginHorizontal: 15,
+  },
+});

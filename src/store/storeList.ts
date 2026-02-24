@@ -20,7 +20,7 @@ interface IListData {
   icon: MaterialIconType;
   color: string;
   id: string;
-  productIds: string[];
+  productIDs: string[];
 }
 
 export const useList = create<addListProps>((set, get) => ({
@@ -36,19 +36,16 @@ export const useList = create<addListProps>((set, get) => ({
       title: get().input,
       icon: get().icon,
       color: get().color,
-      productIds: [],
+      productIDs: [],
       id: nanoid(),
     };
     set(() => ({ lists: [...get().lists, newList] }));
   },
-  addProductToList: (listId, productId) =>
+  addProductToList: (listID, productID) =>
     set((state) => ({
       lists: state.lists.map((list) =>
-        list.id === listId
-          ? { ...list, productIds: [...list.productIds, productId] }
-          : list,
+        list.id === listID ? { ...list, productIDs: [...list.productIDs, productID] } : list,
       ),
     })),
-  resetState: () =>
-    set(() => ({ input: "", color: "grey", icon: "disabled-by-default" })),
+  resetState: () => set(() => ({ input: "", color: "grey", icon: "disabled-by-default" })),
 }));

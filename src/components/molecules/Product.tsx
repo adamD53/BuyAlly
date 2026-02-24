@@ -3,18 +3,18 @@ import { Octicons } from "@expo/vector-icons";
 import { useProduct } from "@/src/store/storeProduct";
 
 interface IProductProps {
-  productId: string;
+  productID: string;
 }
 
-export function Product({ productId }: IProductProps) {
+export function Product({ productID }: IProductProps) {
   const isChecked = useProduct(
-    ({ products }) => products.find((prod) => prod.id === productId)?.product.checked,
+    ({ products }) => products.find((prod) => prod.id === productID)?.product.checked,
   );
   const { toggleProduct } = useProduct();
-  const product = useProduct((state) => state.products.find((p) => p.id === productId));
+  const product = useProduct((state) => state.products.find((p) => p.id === productID));
 
   return (
-    <Pressable style={styles.container} onPress={() => toggleProduct(productId)}>
+    <Pressable style={styles.container} onPress={() => toggleProduct(productID)}>
       <View style={styles.checkIcon}>
         <Octicons
           name={isChecked ? "check-circle-fill" : "check-circle"}

@@ -1,13 +1,18 @@
-import { View, StyleSheet, ImageBackground } from "react-native";
+import { View, StyleSheet, ImageBackground, Text } from "react-native";
 import backgroundImage from "../../assets/login_background.png";
-import LoginForm from "../components/molecules/LoginForm";
+// import LoginForm from "../components/molecules/LoginForm";
+import { auth } from "../../firebaseConfig";
+import RegisterForm from "../components/molecules/RegisterForm";
 
 export default function LoginScreen() {
+  const user = auth.currentUser;
+
   return (
     <View style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.image}>
         <View style={styles.overlay} />
-        <LoginForm />
+        <RegisterForm />
+        {user && <Text>Welcome {user.displayName}</Text>}
       </ImageBackground>
     </View>
   );

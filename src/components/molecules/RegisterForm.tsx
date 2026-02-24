@@ -3,13 +3,14 @@ import HeaderText from "../atoms/HeaderText";
 import { FormButton } from "../atoms/FormButton";
 import FormInput from "../atoms/FormInput";
 
-export default function LoginForm() {
+export default function RegisterForm() {
   return (
     <View style={styles.container}>
-      <HeaderText style={styles.text} title="Sign in to Your Account"></HeaderText>
+      <HeaderText style={styles.text} title="Create a New Account"></HeaderText>
       <FormInput placeholder="Enter your e-mail" />
       <FormInput placeholder="Enter your password" />
-      <FormButton title="Login" onPress={() => console.log("pressed login")} />
+      <FormInput placeholder="Repeat password" />
+      <FormButton title="Register" onPress={() => console.log("Register pressed")} />
     </View>
   );
 }

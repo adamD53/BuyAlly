@@ -6,13 +6,13 @@ import { useList } from "@/src/store/storeList";
 
 export function SingleListHeader() {
   const { id } = useLocalSearchParams();
-  const cleanId = id.toString().slice(1, -1);
-  const title = useList((state) => state.lists.find((list) => list.id == cleanId)?.title);
+  const cleanID = id.toString().slice(1, -1);
+  const title = useList((state) => state.lists.find((list) => list.id == cleanID)?.title);
 
   const handlePushToModal = () => {
     router.push({
       pathname: "lists/addProduct",
-      params: { listId: cleanId }
+      params: { listId: cleanID },
     });
   };
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    padding: 30
+    padding: 30,
   },
 
   headerText: {
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-})
+});

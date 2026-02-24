@@ -1,26 +1,18 @@
-import { Pressable, StyleProp, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 export type AntDesginIconType = React.ComponentProps<typeof AntDesign>["name"];
 
-interface ILoginButtonProps {
+interface IFormButtonProps {
   title: string;
   onPress: () => void;
   disabled?: boolean;
   iconName?: AntDesginIconType;
 }
 
-export function LoginButton({ title, onPress, disabled, iconName }: ILoginButtonProps) {
+export function FormButton({ title, onPress, disabled, iconName }: IFormButtonProps) {
   return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.pressed,
-        disabled && styles.disabled,
-      ]}
-    >
+    <Pressable onPress={onPress} disabled={disabled} style={[styles.button, disabled && styles.disabled]}>
       {title && <AntDesign name={iconName} size={24} color="white" />}
       <Text style={styles.text}>{title}</Text>
     </Pressable>
@@ -34,18 +26,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#313538",
+    backgroundColor: "#F9F9F9",
     flexDirection: "row",
-    marginVertical: 5,
-  },
-  pressed: {
-    opacity: 0.85,
+    marginVertical: 12,
   },
   disabled: {
     opacity: 0.5,
   },
   text: {
-    color: "#F9F9F9",
+    color: "#000000",
     fontSize: 16,
     fontWeight: "600",
   },
