@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#F9F9F9",
     flexDirection: "row",
-    marginVertical: 12,
+    marginVertical: 18,
   },
   disabled: {
     opacity: 0.5,
