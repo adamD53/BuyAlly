@@ -1,12 +1,11 @@
 import { StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
 
 interface IFormInputProps extends Omit<TextInputProps, "style"> {
-  plaeholder?: string;
   error?: string;
   containerStyle?: object;
 }
 
-export default function FormInput({ placeholder, error, containerStyle, ...textInputProps }: IFormInputProps) {
+export default function FormInput({ placeholder, error, containerStyle, value, onChange, ...textInputProps }: IFormInputProps) {
   return (
     <View style={[styles.container, containerStyle]}>
       <TextInput
@@ -15,6 +14,8 @@ export default function FormInput({ placeholder, error, containerStyle, ...textI
         placeholderTextColor="#BCBCBC"
         autoCapitalize={textInputProps.autoCapitalize ?? "none"}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>

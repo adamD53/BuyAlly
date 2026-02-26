@@ -1,12 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import ListsScreen from "../src/screens/ListsScreen";
+import RegisterScreen from "../../src/screens/RegisterScreen";
 
-export default function MainScreen() {
+export default function SignUp() {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      <ListsScreen />
+      <RegisterScreen />
     </View>
   );
 }

@@ -1,13 +1,13 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
 import backgroundImage from "../../assets/login_background.png";
-import LoginForm from "../components/molecules/LoginForm";
+import RegisterForm from "../components/molecules/RegisterForm";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.image}>
         <View style={styles.overlay} />
-        <LoginForm />
+        <RegisterForm />
       </ImageBackground>
     </View>
   );

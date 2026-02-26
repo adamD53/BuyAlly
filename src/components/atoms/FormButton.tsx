@@ -8,13 +8,18 @@ interface IFormButtonProps {
   onPress: () => void;
   disabled?: boolean;
   iconName?: AntDesginIconType;
+  appearance: "dark" | "light";
 }
 
-export function FormButton({ title, onPress, disabled, iconName }: IFormButtonProps) {
+export function FormButton({ title, onPress, disabled, iconName, appearance }: IFormButtonProps) {
   return (
-    <Pressable onPress={onPress} disabled={disabled} style={[styles.button, disabled && styles.disabled]}>
-      {title && <AntDesign name={iconName} size={24} color="white" />}
-      <Text style={styles.text}>{title}</Text>
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      style={[styles.button, appearance === "light" ? styles.light : styles.dark, disabled && styles.disabled]}
+    >
+      {iconName && <AntDesign name={iconName} size={24} color="white" />}
+      <Text style={[styles.text, appearance === "light" ? styles.light : styles.dark]}>{title}</Text>
     </Pressable>
   );
 }
@@ -26,7 +31,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F9F9F9",
     flexDirection: "row",
     marginVertical: 18,
   },
@@ -34,8 +38,15 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   text: {
-    color: "#000000",
     fontSize: 16,
     fontWeight: "600",
+  },
+  dark: {
+    backgroundColor: "#2e363d",
+    color: "#f9f9f9",
+  },
+  light: {
+    backgroundColor: "#f9f9f9",
+    color: "#000000",
   },
 });
