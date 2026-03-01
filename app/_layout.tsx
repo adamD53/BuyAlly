@@ -24,11 +24,9 @@ export default function RootLayout() {
     const inAuthGroup = segments[0] === "(auth)";
 
     if (!user && !inAuthGroup) {
-      console.log("we are there");
       router.replace("(auth)/welcome");
     } else if (user && inAuthGroup) {
-      console.log("we are here");
-      router.navigate("/");
+      router.replace("/");
     }
   }, [user, initializing, segments]);
 

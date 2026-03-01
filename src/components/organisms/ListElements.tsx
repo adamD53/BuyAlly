@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 3,
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   list: {
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
   text: {
     color: "grey",
     fontSize: 18,
-    fontWeight: 600
-  }
-})
+    fontWeight: 600,
+  },
+});
