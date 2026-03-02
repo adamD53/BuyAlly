@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 import { MaterialIconType } from "../components/molecules/MenuGrid";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "@/firebaseConfig";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { auth, db } from "@/firebaseConfig";
 
 interface addListProps {
   input: string;
@@ -13,9 +13,11 @@ interface addListProps {
   setColor: (color: string) => void;
   setIcon: (icon: MaterialIconType) => void;
   addList: () => string;
-  fetchList: (listID: string) => Promise<void>;
+  postList: (listID: string) => Promise<void>;
+  fetchLists: () => Promise<void>;
   addProductToList: (listID: string | string[], productID: string) => void;
   resetState: () => void;
+  cleanLists: () => void;
 }
 
 interface IListData {
@@ -23,6 +25,7 @@ interface IListData {
   icon: MaterialIconType;
   color: string;
   id: string;
+  ownerID: string | undefined;
   productIDs: string[];
 }
 
@@ -42,6 +45,7 @@ export const useList = create<addListProps>((set, get) => ({
       color: get().color,
       productIDs: [],
       id: newId,
+      ownerID: auth.currentUser?.uid,
     };
     set(() => ({ lists: [...get().lists, newList] }));
     return newId;
@@ -51,20 +55,39 @@ export const useList = create<addListProps>((set, get) => ({
       lists: state.lists.map((list) => (list.id === listID ? { ...list, productIDs: [...list.productIDs, productID] } : list)),
     })),
   resetState: () => set(() => ({ input: "", color: "grey", icon: "disabled-by-default" })),
-  fetchList: async (listID) => {
+  postList: async (listID) => {
     try {
       const currentList = get().lists.find((list) => list.id == listID);
-      console.log(`color: ${currentList}`);
       const newDocRef = doc(db, "lists", listID);
       await setDoc(newDocRef, {
         color: currentList?.color,
         icon: currentList?.icon,
         productIDs: currentList?.productIDs,
         title: currentList?.title,
+        ownerID: currentList?.ownerID,
       });
-      console.log(`List document created with id: ${newDocRef.id}`);
     } catch (err: unknown) {
-      console.log(`Error with creating a document: ${err}`);
+      console.error(`Error with creating a document: ${err}`);
     }
   },
+  fetchLists: async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "lists"));
+      querySnapshot.forEach((doc) => {
+        const currentListData = doc.data();
+        const newList: IListData = {
+          title: currentListData.title,
+          icon: currentListData.icon,
+          color: currentListData.color,
+          id: doc.id,
+          ownerID: currentListData.ownerID,
+          productIDs: currentListData.productIDs,
+        };
+        set(() => ({ lists: [...get().lists, newList] }));
+      });
+    } catch (err: unknown) {
+      console.error(`Error with retrieving data from firestore. Error: ${err}`);
+    }
+  },
+  cleanLists: () => set(() => ({ lists: [] })),
 }));

@@ -1,15 +1,27 @@
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { ListItem } from "../molecules/ListItem";
 import { useList } from "@/src/store/storeList";
+import { auth } from "@/firebaseConfig";
+import { useEffect } from "react";
 
 export function ListElements() {
-  const listData = useList((state) => state.lists);
+  const { fetchLists, lists, cleanLists } = useList();
+  const currentUserList = lists.filter((list) => list.ownerID === auth.currentUser?.uid);
+
+  console.log("useEffect fetchlists called");
+  useEffect(() => {
+    fetchLists();
+    return () => {
+      console.log("lists cleared");
+      cleanLists();
+    };
+  }, [fetchLists, cleanLists]);
 
   return (
     <View style={styles.container}>
-      {listData.length == 0 && <Text style={styles.text}>No lists</Text>}
+      {currentUserList.length == 0 && <Text style={styles.text}>No lists</Text>}
       <FlatList
-        data={listData}
+        data={currentUserList}
         renderItem={({ item }) => <ListItem title={item.title} color={item.color} icon={item.icon} id={item.id} />}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
