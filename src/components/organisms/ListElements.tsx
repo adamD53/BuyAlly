@@ -3,19 +3,25 @@ import { ListItem } from "../molecules/ListItem";
 import { useList } from "@/src/store/storeList";
 import { auth } from "@/firebaseConfig";
 import { useEffect } from "react";
+import { useProduct } from "@/src/store/storeProduct";
 
 export function ListElements() {
   const { fetchLists, lists, cleanLists } = useList();
   const currentUserList = lists.filter((list) => list.ownerID === auth.currentUser?.uid);
+  const { fetchProducts, cleanProducts } = useProduct();
 
-  console.log("useEffect fetchlists called");
   useEffect(() => {
     fetchLists();
+    console.log("useEffect fetched lists");
+    fetchProducts();
+    console.log("useEffect fetched products");
     return () => {
-      console.log("lists cleared");
+      cleanProducts();
       cleanLists();
+      console.log("lists cleared");
+      console.log("products cleared");
     };
-  }, [fetchLists, cleanLists]);
+  }, [fetchLists, cleanLists, fetchProducts, cleanProducts]);
 
   return (
     <View style={styles.container}>

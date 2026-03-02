@@ -6,9 +6,7 @@ import { useLocalSearchParams } from "expo-router";
 export function ProductList() {
   const { id } = useLocalSearchParams();
   const cleanID = id.toString().slice(1, -1);
-  const productsData = useList(
-    (state) => state.lists.find((list) => list.id === cleanID)?.productIDs,
-  );
+  const productsData = useList((state) => state.lists.find((list) => list.id === cleanID)?.productIDs);
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
+import { doc, setDoc, updateDoc, arrayUnion, getDocs, collection } from "firebase/firestore";
+import { db } from "@/firebaseConfig";
 
 interface addProductProps {
   input: string;
@@ -12,6 +14,9 @@ interface addProductProps {
   addProduct: () => string;
   resetState: () => void;
   toggleProduct: (id: string) => void;
+  postProduct: (productID: string, listID: string | string[]) => Promise<void>;
+  fetchProducts: () => Promise<void>;
+  cleanProducts: () => void;
 }
 
 export interface IProductData {
@@ -58,4 +63,42 @@ export const useProduct = create<addProductProps>((set, get) => ({
           : prod,
       ),
     })),
+  postProduct: async (productID, listID) => {
+    try {
+      const currentProduct = get().products.find((product) => product.id == productID);
+      const productDocRef = doc(db, "products", productID);
+      const listDocRef = doc(db, "lists", listID.toString());
+
+      await updateDoc(listDocRef, {
+        productIDs: arrayUnion(productID),
+      });
+
+      await setDoc(productDocRef, {
+        title: currentProduct?.product.title,
+        quantity: currentProduct?.product.quantity,
+        checked: currentProduct?.product.checked,
+      });
+    } catch (err: unknown) {
+      console.error(`Error with creating a product document: ${err}`);
+    }
+  },
+  fetchProducts: async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "products"));
+
+      querySnapshot.forEach((doc) => {
+        const currentProductData = doc.data();
+        const newProduct: IProductData = {
+          title: currentProductData.title,
+          quantity: currentProductData.quantity,
+          checked: currentProductData.checked,
+        };
+
+        set(() => ({ products: [...get().products, { id: doc.id, product: newProduct }] }));
+      });
+    } catch (err: unknown) {
+      console.error(`Error with retrieving data from firestore. ${err}`);
+    }
+  },
+  cleanProducts: () => set(() => ({ products: [] })),
 }));

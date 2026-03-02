@@ -23,9 +23,9 @@ export default function RegisterForm() {
   return (
     <View style={styles.container}>
       <HeaderText style={styles.text} title="Create a New Account"></HeaderText>
-      <FormInput placeholder="Enter your e-mail" value={email} onChangeText={setEmail} />
-      <FormInput placeholder="Enter your password" value={password} onChangeText={setPassword} />
-      <FormInput placeholder="Repeat password" />
+      <FormInput placeholder="Enter your e-mail" value={email} onChangeText={setEmail} textContentType="emailAddress" />
+      <FormInput placeholder="Enter your password" value={password} onChangeText={setPassword} textContentType="password" secureTextEntry={true} />
+      <FormInput placeholder="Repeat password" textContentType="password" secureTextEntry={true} />
       <FormButton title="Register" onPress={signUp} appearance="light" />
       <Pressable onPress={() => router.replace("(auth)/signIn")}>
         <Text style={{ ...styles.routeText, ...styles.text }}>

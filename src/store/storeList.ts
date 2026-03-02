@@ -50,15 +50,17 @@ export const useList = create<addListProps>((set, get) => ({
     set(() => ({ lists: [...get().lists, newList] }));
     return newId;
   },
-  addProductToList: (listID, productID) =>
+  addProductToList: (listID, productID) => {
     set((state) => ({
       lists: state.lists.map((list) => (list.id === listID ? { ...list, productIDs: [...list.productIDs, productID] } : list)),
-    })),
+    }));
+  },
   resetState: () => set(() => ({ input: "", color: "grey", icon: "disabled-by-default" })),
   postList: async (listID) => {
     try {
       const currentList = get().lists.find((list) => list.id == listID);
       const newDocRef = doc(db, "lists", listID);
+
       await setDoc(newDocRef, {
         color: currentList?.color,
         icon: currentList?.icon,
@@ -67,12 +69,13 @@ export const useList = create<addListProps>((set, get) => ({
         ownerID: currentList?.ownerID,
       });
     } catch (err: unknown) {
-      console.error(`Error with creating a document: ${err}`);
+      console.error(`Error with creating a list document. ${err}`);
     }
   },
   fetchLists: async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "lists"));
+
       querySnapshot.forEach((doc) => {
         const currentListData = doc.data();
         const newList: IListData = {
@@ -83,10 +86,11 @@ export const useList = create<addListProps>((set, get) => ({
           ownerID: currentListData.ownerID,
           productIDs: currentListData.productIDs,
         };
+
         set(() => ({ lists: [...get().lists, newList] }));
       });
     } catch (err: unknown) {
-      console.error(`Error with retrieving data from firestore. Error: ${err}`);
+      console.error(`Error with retrieving data from firestore. ${err}`);
     }
   },
   cleanLists: () => set(() => ({ lists: [] })),
