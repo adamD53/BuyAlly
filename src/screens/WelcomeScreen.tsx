@@ -13,7 +13,7 @@ export default function WelcomeScreen() {
     <SafeView>
       <View style={styles.container}>
         <View style={styles.topSection}>
-          <Text style={styles.appTitle}>Welcome to Shopifylist</Text>
+          <Text style={styles.appTitle}>Welcome to BuyAlly</Text>
           <Text style={styles.appSubtitle}>The Right Way to Make Your Shopping Easier</Text>
         </View>
 

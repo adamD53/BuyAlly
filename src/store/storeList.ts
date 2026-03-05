@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 import { MaterialIconType } from "../components/molecules/MenuGrid";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebaseConfig";
 
 interface addListProps {
@@ -13,6 +13,7 @@ interface addListProps {
   setColor: (color: string) => void;
   setIcon: (icon: MaterialIconType) => void;
   addList: () => string;
+  deleteList: (listID: string) => Promise<void>;
   postList: (listID: string) => Promise<void>;
   fetchLists: () => Promise<void>;
   addProductToList: (listID: string | string[], productID: string) => void;
@@ -20,7 +21,7 @@ interface addListProps {
   cleanLists: () => void;
 }
 
-interface IListData {
+export interface IListData {
   title: string;
   icon: MaterialIconType;
   color: string;
@@ -50,11 +51,16 @@ export const useList = create<addListProps>((set, get) => ({
     set(() => ({ lists: [...get().lists, newList] }));
     return newId;
   },
-  addProductToList: (listID, productID) => {
+  deleteList: async (listID) => {
+    set((state) => ({
+      lists: state.lists.filter((list) => list.id !== listID),
+    }));
+    await deleteDoc(doc(db, "lists", listID));
+  },
+  addProductToList: (listID, productID) =>
     set((state) => ({
       lists: state.lists.map((list) => (list.id === listID ? { ...list, productIDs: [...list.productIDs, productID] } : list)),
-    }));
-  },
+    })),
   resetState: () => set(() => ({ input: "", color: "grey", icon: "disabled-by-default" })),
   postList: async (listID) => {
     try {
