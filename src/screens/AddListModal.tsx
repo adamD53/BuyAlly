@@ -1,9 +1,9 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import { useState } from "react";
 import { ModalHeader } from "../components/molecules/ModalHeader";
 import { Input } from "../components/molecules/Input";
 import { AddListMenu } from "../components/molecules/AddListMenu";
-import { LIST_ID_MAX_LENGTH, LIST_NAME_MAX_LENGTH, useList } from "../store/storeList";
+import { LIST_ID_LENGTH, LIST_NAME_MAX_LENGTH, useList } from "../store/storeList";
 import { router } from "expo-router";
 import SwitchMenu, { SwitchMenuOption } from "../components/molecules/SwitchMenu";
 
@@ -11,7 +11,7 @@ export default function AddListModal() {
   const { setInput, setIDInput, addList, postList, addListByID, resetState, input, idInput } = useList();
   const [mode, setMode] = useState<SwitchMenuOption>("new");
 
-  const handleAddList = () => {
+  const handleAddList = async () => {
     switch (mode) {
       case "new": {
         const id = addList();
@@ -21,9 +21,14 @@ export default function AddListModal() {
         break;
       }
       case "existing": {
-        addListByID();
-        resetState();
-        router.back();
+        if (idInput.length === LIST_ID_LENGTH) {
+          const listAdded = await addListByID();
+          if (!listAdded) {
+            Alert.alert("Failed to add list from given ID. Double check your ID and try again");
+          }
+          resetState();
+          router.back();
+        }
         break;
       }
     }
@@ -43,7 +48,10 @@ export default function AddListModal() {
           <AddListMenu />
         </>
       ) : (
-        <Input placeholder="Existing list id" onChange={(id) => setIDInput(id)} value={idInput} maxCharLength={LIST_ID_MAX_LENGTH} />
+        <>
+          <Input placeholder="Existing list id" onChange={(id) => setIDInput(id)} value={idInput} maxCharLength={LIST_ID_LENGTH} />
+          <Text style={styles.errorText}>{idInput.length < 15 && `ID has to be ${LIST_ID_LENGTH} characters long`}</Text>
+        </>
       )}
     </View>
   );
@@ -54,5 +62,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
     gap: 20,
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
   },
 });

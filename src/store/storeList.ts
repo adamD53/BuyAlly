@@ -4,7 +4,7 @@ import { MaterialIconType } from "../components/molecules/MenuGrid";
 import { collection, updateDoc, arrayRemove, doc, getDocs, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "@/firebaseConfig";
 
-export const LIST_ID_MAX_LENGTH = 15;
+export const LIST_ID_LENGTH = 15;
 export const LIST_NAME_MAX_LENGTH = 10;
 
 interface addListProps {
@@ -18,7 +18,7 @@ interface addListProps {
   setColor: (color: string) => void;
   setIcon: (icon: MaterialIconType) => void;
   addList: () => string;
-  addListByID: () => Promise<void>;
+  addListByID: () => Promise<boolean>;
   deleteList: (listID: string) => Promise<void>;
   postList: (listID: string) => Promise<void>;
   fetchLists: () => Promise<void>;
@@ -47,7 +47,7 @@ export const useList = create<addListProps>((set, get) => ({
   setColor: (color) => set(() => ({ color: color })),
   setIcon: (icon) => set(() => ({ icon: icon })),
   addList: () => {
-    const newId = nanoid(LIST_ID_MAX_LENGTH);
+    const newId = nanoid(LIST_ID_LENGTH);
     const newList: IListData = {
       title: get().input,
       icon: get().icon,
@@ -87,9 +87,14 @@ export const useList = create<addListProps>((set, get) => ({
         });
 
         set(() => ({ lists: [...get().lists, newList] }));
+
+        return true;
+      } else {
+        return false;
       }
     } catch (err: unknown) {
       console.error(`Error with firebase while adding list by ID: ${err}`);
+      return false;
     }
   },
   deleteList: async (listID) => {
