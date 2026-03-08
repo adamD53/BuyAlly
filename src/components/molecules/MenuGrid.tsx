@@ -5,15 +5,15 @@ import { useList } from "@/src/store/storeList";
 export type MaterialIconType = React.ComponentProps<typeof MaterialIcons>["name"];
 
 interface IColorItem {
-  id: string,
-  color: string,
-  type: "color"
+  id: string;
+  color: string;
+  type: "color";
 }
 
 interface IIconItem {
-  id: string,
-  icon: MaterialIconType,
-  type: "icon"
+  id: string;
+  icon: MaterialIconType;
+  type: "icon";
 }
 
 export type GridItem = IColorItem | IIconItem;
@@ -24,19 +24,30 @@ function Item({ item }: { item: GridItem }) {
   return (
     <Pressable
       style={styles.item}
-      onPress={() => item.type == "color" ? setColor(item.color) : setIcon(item.icon)}>
+      onPress={() => (item.type == "color" ? setColor(item.color) : setIcon(item.icon))}
+    >
       {item.type == "color" ? (
-        <View style={{ ...styles.checkedContainer, borderColor: color == item.color ? item.color : "transparent" }}>
+        <View
+          style={{
+            ...styles.checkedContainer,
+            borderColor: color == item.color ? item.color : "transparent",
+          }}
+        >
           <View
             style={{
               ...styles.colorIcon,
               backgroundColor: item.color,
-              borderColor: (color == item.color ? "black" : "transparent")
+              borderColor: color == item.color ? "black" : "transparent",
             }}
           />
         </View>
       ) : (
-        <View style={{ ...styles.checkedContainer, borderColor: icon == item.icon ? item.icon : "transparent" }}>
+        <View
+          style={{
+            ...styles.checkedContainer,
+            borderColor: icon == item.icon ? item.icon : "transparent",
+          }}
+        >
           <View style={styles.imageIcon}>
             <MaterialIcons name={item.icon} size={24} color="#565656" />
           </View>
@@ -80,7 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: "100%",
     borderWidth: 1,
     borderColor: "transparent",
-    padding: 1.5
+    padding: 1.5,
   },
 
   colorIcon: {
@@ -96,5 +107,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#E5E5E5",
     alignItems: "center",
     justifyContent: "center",
-  }
-})
+  },
+});

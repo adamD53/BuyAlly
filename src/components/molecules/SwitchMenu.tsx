@@ -9,7 +9,11 @@ interface SwitchMenuProps {
   secondOptionTitle: string;
 }
 
-export default function SwitchMenu({ onChange, firstOptionTitle, secondOptionTitle }: SwitchMenuProps) {
+export default function SwitchMenu({
+  onChange,
+  firstOptionTitle,
+  secondOptionTitle,
+}: SwitchMenuProps) {
   const [selected, setSelected] = useState<SwitchMenuOption>("new");
 
   const handlePress = (option: SwitchMenuOption) => {
@@ -19,15 +23,23 @@ export default function SwitchMenu({ onChange, firstOptionTitle, secondOptionTit
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={[styles.option, selected === "new" && styles.optionActive]} onPress={() => handlePress("new")} activeOpacity={0.8}>
-        <Text style={[styles.label, selected === "new" && styles.labelActive]}>{firstOptionTitle}</Text>
+      <TouchableOpacity
+        style={[styles.option, selected === "new" && styles.optionActive]}
+        onPress={() => handlePress("new")}
+        activeOpacity={0.8}
+      >
+        <Text style={[styles.label, selected === "new" && styles.labelActive]}>
+          {firstOptionTitle}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.option, selected === "existing" && styles.optionActive]}
         onPress={() => handlePress("existing")}
         activeOpacity={0.8}
       >
-        <Text style={[styles.label, selected === "existing" && styles.labelActive]}>{secondOptionTitle}</Text>
+        <Text style={[styles.label, selected === "existing" && styles.labelActive]}>
+          {secondOptionTitle}
+        </Text>
       </TouchableOpacity>
     </View>
   );

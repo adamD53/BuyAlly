@@ -8,7 +8,8 @@ import { router } from "expo-router";
 import SwitchMenu, { SwitchMenuOption } from "../components/molecules/SwitchMenu";
 
 export default function AddListModal() {
-  const { setInput, setIDInput, addList, postList, addListByID, resetState, input, idInput } = useList();
+  const { setInput, setIDInput, addList, postList, addListByID, resetState, input, idInput } =
+    useList();
   const [mode, setMode] = useState<SwitchMenuOption>("new");
 
   const handleAddList = async () => {
@@ -44,13 +45,25 @@ export default function AddListModal() {
       />
       {mode === "new" ? (
         <>
-          <Input placeholder="New list" onChange={(text) => setInput(text)} value={input} maxCharLength={LIST_NAME_MAX_LENGTH} />
+          <Input
+            placeholder="New list"
+            onChange={(text) => setInput(text)}
+            value={input}
+            maxCharLength={LIST_NAME_MAX_LENGTH}
+          />
           <AddListMenu />
         </>
       ) : (
         <>
-          <Input placeholder="Existing list id" onChange={(id) => setIDInput(id)} value={idInput} maxCharLength={LIST_ID_LENGTH} />
-          <Text style={styles.errorText}>{idInput.length < 15 && `ID has to be ${LIST_ID_LENGTH} characters long`}</Text>
+          <Input
+            placeholder="Existing list id"
+            onChange={(id) => setIDInput(id)}
+            value={idInput}
+            maxCharLength={LIST_ID_LENGTH}
+          />
+          <Text style={styles.errorText}>
+            {idInput.length < 15 && `ID has to be ${LIST_ID_LENGTH} characters long`}
+          </Text>
         </>
       )}
     </View>

@@ -4,10 +4,10 @@ import { FooterButton } from "../atoms/FooterButton";
 
 const SafeView = ({ children }: { children?: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
-  return <View style={[styles.container, { paddingBottom: insets.bottom }]}>{children}</View>
-}
+  return <View style={[styles.container, { paddingBottom: insets.bottom }]}>{children}</View>;
+};
 
-export function ListsFooter() {
+export default function ListsFooter() {
   return (
     <SafeView>
       <FooterButton title="Lists" icon="list" />
@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#F8F8F8",
     borderTopColor: "grey",
-    borderTopWidth: .5,
+    borderTopWidth: 0.5,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
-})
+});

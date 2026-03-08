@@ -7,10 +7,12 @@ import { useProduct } from "@/src/store/storeProduct";
 import { Feather } from "@expo/vector-icons";
 import { RowMap, SwipeListView } from "react-native-swipe-list-view";
 
-export function ListElements() {
+export default function ListElements() {
   const { fetchLists, lists, cleanLists, deleteList } = useList();
   const { fetchProducts, cleanProducts } = useProduct();
-  const currentUserList = lists.filter((list) => auth.currentUser?.uid && list.ownersIDs.includes(auth.currentUser.uid));
+  const currentUserList = lists.filter(
+    (list) => auth.currentUser?.uid && list.ownersIDs.includes(auth.currentUser.uid),
+  );
 
   useEffect(() => {
     fetchLists();
@@ -21,7 +23,10 @@ export function ListElements() {
     };
   }, [fetchLists, cleanLists, fetchProducts, cleanProducts]);
 
-  const handleDeleteListItem = (rowMap: RowMap<IListData>, rowData: ListRenderItemInfo<IListData>) => {
+  const handleDeleteListItem = (
+    rowMap: RowMap<IListData>,
+    rowData: ListRenderItemInfo<IListData>,
+  ) => {
     deleteList(rowData.item.id);
     rowMap[rowData.item.id].closeRow();
   };
@@ -31,16 +36,24 @@ export function ListElements() {
       {currentUserList.length == 0 && <Text style={styles.text}>No lists</Text>}
       <SwipeListView
         data={currentUserList}
-        renderItem={({ item }) => <ListItem title={item.title} color={item.color} icon={item.icon} id={item.id} />}
+        renderItem={({ item }) => (
+          <ListItem title={item.title} color={item.color} icon={item.icon} id={item.id} />
+        )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         renderHiddenItem={(rowData, rowMap) => (
           <View style={styles.hiddenRow}>
             <View style={styles.actionsRow}>
-              <TouchableOpacity onPress={() => rowMap[rowData.item.id].closeRow()} style={[styles.optionIconContainer, styles.shareAction]}>
+              <TouchableOpacity
+                onPress={() => rowMap[rowData.item.id].closeRow()}
+                style={[styles.optionIconContainer, styles.shareAction]}
+              >
                 <Feather name="share" size={22} color="white" />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleDeleteListItem(rowMap, rowData)} style={[styles.optionIconContainer, styles.deleteAction]}>
+              <TouchableOpacity
+                onPress={() => handleDeleteListItem(rowMap, rowData)}
+                style={[styles.optionIconContainer, styles.deleteAction]}
+              >
                 <Feather name="trash" size={22} color="white" />
               </TouchableOpacity>
             </View>

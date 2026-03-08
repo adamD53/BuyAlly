@@ -5,7 +5,11 @@ import { router } from "expo-router";
 
 const SafeView = ({ children }: { children?: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
-  return <View style={[styles.safeArea, { paddingBottom: insets.bottom, paddingTop: insets.top }]}>{children}</View>;
+  return (
+    <View style={[styles.safeArea, { paddingBottom: insets.bottom, paddingTop: insets.top }]}>
+      {children}
+    </View>
+  );
 };
 
 export default function WelcomeScreen() {
@@ -19,8 +23,16 @@ export default function WelcomeScreen() {
 
         <View style={styles.bottomSection}>
           <View style={styles.actionsRow}>
-            <FormButton title="Sign in" appearance="dark" onPress={() => router.replace("(auth)/signIn")} />
-            <FormButton title="Sign up" appearance="dark" onPress={() => router.replace("(auth)/signUp")} />
+            <FormButton
+              title="Sign in"
+              appearance="dark"
+              onPress={() => router.replace("(auth)/signIn")}
+            />
+            <FormButton
+              title="Sign up"
+              appearance="dark"
+              onPress={() => router.replace("(auth)/signUp")}
+            />
           </View>
         </View>
       </View>

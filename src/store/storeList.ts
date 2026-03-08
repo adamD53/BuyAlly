@@ -1,7 +1,16 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 import { MaterialIconType } from "../components/molecules/MenuGrid";
-import { collection, updateDoc, arrayRemove, doc, getDocs, setDoc, getDoc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  updateDoc,
+  arrayRemove,
+  doc,
+  getDocs,
+  setDoc,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { auth, db } from "@/firebaseConfig";
 
 export const LIST_ID_LENGTH = 15;
@@ -122,9 +131,12 @@ export const useList = create<addListProps>((set, get) => ({
   },
   addProductToList: (listID, productID) =>
     set((state) => ({
-      lists: state.lists.map((list) => (list.id === listID ? { ...list, productIDs: [...list.productIDs, productID] } : list)),
+      lists: state.lists.map((list) =>
+        list.id === listID ? { ...list, productIDs: [...list.productIDs, productID] } : list,
+      ),
     })),
-  resetState: () => set(() => ({ input: "", idInput: "", color: "grey", icon: "disabled-by-default" })),
+  resetState: () =>
+    set(() => ({ input: "", idInput: "", color: "grey", icon: "disabled-by-default" })),
   postList: async (listID) => {
     try {
       const currentList = get().lists.find((list) => list.id == listID);

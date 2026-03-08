@@ -5,10 +5,10 @@ import { TextButton } from "../atoms/TextButton";
 
 const SafeView = ({ children }: { children?: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
-  return <View style={[styles.container, { paddingTop: insets.top + 30 }]}>{children}</View>
-}
+  return <View style={[styles.container, { paddingTop: insets.top + 30 }]}>{children}</View>;
+};
 
-export function ListsHeader() {
+export default function ListsHeader() {
   return (
     <SafeView>
       <Text style={styles.headerText}>Lists</Text>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    padding: 30
+    padding: 30,
   },
 
   headerText: {
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-})
+});

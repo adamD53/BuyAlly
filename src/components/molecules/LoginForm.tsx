@@ -23,8 +23,19 @@ export default function LoginForm() {
   return (
     <View style={styles.container}>
       <HeaderText style={styles.text} title="Sign in to Your Account"></HeaderText>
-      <FormInput placeholder="Enter your e-mail" value={email} onChangeText={setEmail} textContentType="emailAddress" />
-      <FormInput placeholder="Enter your password" value={password} onChangeText={setPassword} textContentType="password" secureTextEntry={true} />
+      <FormInput
+        placeholder="Enter your e-mail"
+        value={email}
+        onChangeText={setEmail}
+        textContentType="emailAddress"
+      />
+      <FormInput
+        placeholder="Enter your password"
+        value={password}
+        onChangeText={setPassword}
+        textContentType="password"
+        secureTextEntry={true}
+      />
       <Pressable>
         <Text style={styles.routeText}>Forgot your password?</Text>
       </Pressable>

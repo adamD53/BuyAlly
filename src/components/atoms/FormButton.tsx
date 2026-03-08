@@ -16,10 +16,16 @@ export function FormButton({ title, onPress, disabled, iconName, appearance }: I
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={[styles.button, appearance === "light" ? styles.light : styles.dark, disabled && styles.disabled]}
+      style={[
+        styles.button,
+        appearance === "light" ? styles.light : styles.dark,
+        disabled && styles.disabled,
+      ]}
     >
       {iconName && <AntDesign name={iconName} size={24} color="white" />}
-      <Text style={[styles.text, appearance === "light" ? styles.light : styles.dark]}>{title}</Text>
+      <Text style={[styles.text, appearance === "light" ? styles.light : styles.dark]}>
+        {title}
+      </Text>
     </Pressable>
   );
 }

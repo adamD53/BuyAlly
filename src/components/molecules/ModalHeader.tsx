@@ -21,7 +21,9 @@ export function ModalHeader({ onSubmit, title, fontColor }: IModalHeaderProps) {
         <TextButton onPress={() => router.back()} title="Cancel" color={fontColor} />
         <TextButton onPress={onSubmit} title="Done" color={fontColor} />
       </View>
-      <Text style={{ ...styles.headerText, color: fontColor ? fontColor : "#111111" }}>{title}</Text>
+      <Text style={{ ...styles.headerText, color: fontColor ? fontColor : "#111111" }}>
+        {title}
+      </Text>
     </SafeView>
   );
 }

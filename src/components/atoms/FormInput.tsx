@@ -5,7 +5,14 @@ interface IFormInputProps extends Omit<TextInputProps, "style"> {
   containerStyle?: object;
 }
 
-export default function FormInput({ placeholder, error, containerStyle, value, onChange, ...textInputProps }: IFormInputProps) {
+export default function FormInput({
+  placeholder,
+  error,
+  containerStyle,
+  value,
+  onChange,
+  ...textInputProps
+}: IFormInputProps) {
   return (
     <View style={[styles.container, containerStyle]}>
       <TextInput

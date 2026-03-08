@@ -7,7 +7,17 @@ import { useList } from "../store/storeList";
 import { useLocalSearchParams } from "expo-router";
 
 export default function AddProductModal() {
-  const { input, quantity, note, setInput, setQuantity, setNote, addProduct, resetState, postProduct } = useProduct();
+  const {
+    input,
+    quantity,
+    note,
+    setInput,
+    setQuantity,
+    setNote,
+    addProduct,
+    resetState,
+    postProduct,
+  } = useProduct();
   const { addProductToList } = useList();
   const { listId } = useLocalSearchParams();
 
@@ -24,7 +34,12 @@ export default function AddProductModal() {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <ModalHeader onSubmit={handleAddProduct} title="Add product" fontColor="white" />
-        <Input placeholder="New product" value={input} onChange={(text) => setInput(text)} color="white" />
+        <Input
+          placeholder="New product"
+          value={input}
+          onChange={(text) => setInput(text)}
+          color="white"
+        />
       </View>
       <Input placeholder="Quantity" value={quantity} onChange={(text) => setQuantity(text)} />
       <Input placeholder="Note" value={note} onChange={(text) => setNote(text)} />

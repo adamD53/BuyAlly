@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import { useList } from "@/src/store/storeList";
 
-export function SingleListHeader() {
+export default function SingleListHeader() {
   const { id } = useLocalSearchParams();
   const cleanID = id.toString().slice(1, -1);
   const title = useList((state) => state.lists.find((list) => list.id == cleanID)?.title);
