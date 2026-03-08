@@ -9,8 +9,8 @@ import { RowMap, SwipeListView } from "react-native-swipe-list-view";
 
 export function ListElements() {
   const { fetchLists, lists, cleanLists, deleteList } = useList();
-  const currentUserList = lists.filter((list) => list.ownerID === auth.currentUser?.uid);
   const { fetchProducts, cleanProducts } = useProduct();
+  const currentUserList = lists.filter((list) => auth.currentUser?.uid && list.ownersIDs.includes(auth.currentUser.uid));
 
   useEffect(() => {
     fetchLists();
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: 5,
   },
   optionIconContainer: {
     width: 62,

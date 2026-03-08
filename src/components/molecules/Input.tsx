@@ -1,13 +1,16 @@
 import { TextInput, View, StyleSheet } from "react-native";
 
 interface InputProps {
-  value: string,
-  placeholder: string,
-  color?: string,
-  onChange: (text: string) => void,
+  value: string;
+  placeholder: string;
+  color?: string;
+  maxCharLength?: number;
+  onChange: (text: string) => void;
 }
 
-export function Input({ value, onChange, placeholder, color }: InputProps) {
+const DEFAULT_INPUT_LENGTH = 25;
+
+export function Input({ value, onChange, placeholder, color, maxCharLength }: InputProps) {
   return (
     <View style={styles.container}>
       <TextInput
@@ -20,6 +23,7 @@ export function Input({ value, onChange, placeholder, color }: InputProps) {
         }}
         onChangeText={onChange}
         value={value}
+        maxLength={maxCharLength ? maxCharLength : DEFAULT_INPUT_LENGTH}
       />
     </View>
   );
@@ -36,5 +40,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderBottomWidth: 0.5,
     paddingBottom: 20,
-  }
-})
+  },
+});

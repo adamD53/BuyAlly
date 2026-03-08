@@ -1,7 +1,7 @@
-import { StyleSheet, View } from 'react-native';
-import AddListModal from '../src/screens/AddListModal';
+import { StyleSheet, View } from "react-native";
+import AddListModal from "../src/screens/AddListModal";
 
-export default function AddList () {
+export default function AddList() {
   return (
     <View style={styles.container}>
       <AddListModal />
@@ -11,7 +11,7 @@ export default function AddList () {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
   },
 });

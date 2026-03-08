@@ -4,15 +4,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextButton } from "../atoms/TextButton";
 
 interface IModalHeaderProps {
-  title: string,
-  onSubmit: () => void,
-  fontColor?: string
+  title: string;
+  onSubmit: () => void;
+  fontColor?: string;
 }
 
 const SafeView = ({ children }: { children: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
-  return <View style={[styles.container, { paddingTop: insets.top }]}>{children}</View>
-}
+  return <View style={[styles.container, { paddingTop: insets.top }]}>{children}</View>;
+};
 
 export function ModalHeader({ onSubmit, title, fontColor }: IModalHeaderProps) {
   return (
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     padding: 20,
-    gap: 25
+    gap: 25,
   },
 
   textButtons: {
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 30,
     fontWeight: "bold",
-    width: "100%"
+    width: "100%",
   },
-})
+});
