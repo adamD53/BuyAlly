@@ -3,6 +3,21 @@ import { Stack, useSegments, router } from "expo-router";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import Toast, { BaseToastProps, BaseToast } from "react-native-toast-message";
+
+const toastConfig = {
+  success: (props: BaseToastProps) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: "green" }}
+      contentContainerStyle={{ paddingVertical: 15 }}
+      text1Style={{
+        fontSize: 13,
+        fontWeight: "400",
+      }}
+    />
+  ),
+};
 
 export default function RootLayout() {
   const [user, setUser] = useState<null | User>(null);
@@ -51,6 +66,7 @@ export default function RootLayout() {
         <Stack.Screen name="(auth)/signUp" />
         <Stack.Screen name="(auth)/welcome" />
       </Stack>
+      <Toast config={toastConfig} topOffset={70} />
     </SafeAreaProvider>
   );
 }

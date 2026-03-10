@@ -6,6 +6,10 @@ import { router } from "expo-router";
 import { useList } from "../store/storeList";
 import { useLocalSearchParams } from "expo-router";
 
+const QUANTITY_MAX_LENGTH = 5;
+const NOTE_MAX_LENGTH = 20;
+const PRODUCT_NAME_MAX_LENGTH = 15;
+
 export default function AddProductModal() {
   const {
     input,
@@ -37,12 +41,25 @@ export default function AddProductModal() {
         <Input
           placeholder="New product"
           value={input}
-          onChange={(text) => setInput(text)}
+          onChangeText={(text) => setInput(text)}
           color="white"
+          maxLength={PRODUCT_NAME_MAX_LENGTH}
         />
       </View>
-      <Input placeholder="Quantity" value={quantity} onChange={(text) => setQuantity(text)} />
-      <Input placeholder="Note" value={note} onChange={(text) => setNote(text)} />
+      <Input
+        placeholder="Quantity"
+        value={quantity}
+        onChangeText={(text) => setQuantity(text)}
+        defaultValue="1"
+        keyboardType="number-pad"
+        maxLength={QUANTITY_MAX_LENGTH}
+      />
+      <Input
+        placeholder="Note"
+        value={note}
+        onChangeText={(text) => setNote(text)}
+        maxLength={NOTE_MAX_LENGTH}
+      />
     </View>
   );
 }

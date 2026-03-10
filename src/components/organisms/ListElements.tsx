@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useProduct } from "@/src/store/storeProduct";
 import { Feather } from "@expo/vector-icons";
 import { RowMap, SwipeListView } from "react-native-swipe-list-view";
+import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
 
 export default function ListElements() {
   const { fetchLists, lists, cleanLists, deleteList } = useList();
@@ -31,6 +33,19 @@ export default function ListElements() {
     rowMap[rowData.item.id].closeRow();
   };
 
+  const handleShareListItem = async (
+    rowMap: RowMap<IListData>,
+    rowData: ListRenderItemInfo<IListData>,
+  ) => {
+    await Clipboard.setStringAsync(rowData.item.id);
+    rowMap[rowData.item.id].closeRow();
+    Toast.show({
+      type: "success",
+      text1: `List id ${rowData.item.id} copied to clipboard.`,
+      text1Style: { fontStyle: "normal" },
+    });
+  };
+
   return (
     <View style={styles.container}>
       {currentUserList.length == 0 && <Text style={styles.text}>No lists</Text>}
@@ -45,7 +60,7 @@ export default function ListElements() {
           <View style={styles.hiddenRow}>
             <View style={styles.actionsRow}>
               <TouchableOpacity
-                onPress={() => rowMap[rowData.item.id].closeRow()}
+                onPress={() => handleShareListItem(rowMap, rowData)}
                 style={[styles.optionIconContainer, styles.shareAction]}
               >
                 <Feather name="share" size={22} color="white" />

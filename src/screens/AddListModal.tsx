@@ -6,10 +6,12 @@ import { AddListMenu } from "../components/molecules/AddListMenu";
 import { LIST_ID_LENGTH, LIST_NAME_MAX_LENGTH, useList } from "../store/storeList";
 import { router } from "expo-router";
 import SwitchMenu, { SwitchMenuOption } from "../components/molecules/SwitchMenu";
+import { useProduct } from "../store/storeProduct";
 
 export default function AddListModal() {
   const { setInput, setIDInput, addList, postList, addListByID, resetState, input, idInput } =
     useList();
+  const { fetchProducts } = useProduct();
   const [mode, setMode] = useState<SwitchMenuOption>("new");
 
   const handleAddList = async () => {
@@ -27,6 +29,7 @@ export default function AddListModal() {
           if (!listAdded) {
             Alert.alert("Failed to add list from given ID. Double check your ID and try again");
           }
+          fetchProducts();
           resetState();
           router.back();
         }
@@ -47,9 +50,9 @@ export default function AddListModal() {
         <>
           <Input
             placeholder="New list"
-            onChange={(text) => setInput(text)}
+            onChangeText={(text) => setInput(text)}
             value={input}
-            maxCharLength={LIST_NAME_MAX_LENGTH}
+            maxLength={LIST_NAME_MAX_LENGTH}
           />
           <AddListMenu />
         </>
@@ -57,9 +60,9 @@ export default function AddListModal() {
         <>
           <Input
             placeholder="Existing list id"
-            onChange={(id) => setIDInput(id)}
+            onChangeText={(id) => setIDInput(id)}
             value={idInput}
-            maxCharLength={LIST_ID_LENGTH}
+            maxLength={LIST_ID_LENGTH}
           />
           <Text style={styles.errorText}>
             {idInput.length < 15 && `ID has to be ${LIST_ID_LENGTH} characters long`}
