@@ -27,7 +27,9 @@ export default function AddListModal() {
         if (idInput.length === LIST_ID_LENGTH) {
           const listAdded = await addListByID();
           if (!listAdded) {
-            Alert.alert("Failed to add list from given ID. Double check your ID and try again");
+            Alert.alert(
+              "Failed to add list from given ID. Your ID might be incorrect or you trying to add list that you already have",
+            );
           }
           fetchProducts();
           resetState();

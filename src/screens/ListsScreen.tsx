@@ -1,12 +1,15 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import ListsHeader from "../components/molecules/ListsHeader";
 import ListElements from "../components/organisms/ListElements";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
 
 export default function ListsScreen() {
   return (
     <View style={styles.container}>
       <ListsHeader />
       <ListElements />
+      <Button onPress={() => signOut(auth)} title="LogOut" />
     </View>
   );
 }

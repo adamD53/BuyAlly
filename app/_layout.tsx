@@ -50,7 +50,6 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(app)/index" />
         <Stack.Screen name="addList" options={{ presentation: "modal" }} />
         <Stack.Screen
           name="lists/[id]"

@@ -10,6 +10,8 @@ import {
   setDoc,
   getDoc,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { auth, db } from "@/firebaseConfig";
 
@@ -73,6 +75,17 @@ export const useList = create<addListProps>((set, get) => ({
   addListByID: async () => {
     try {
       const listID = get().idInput;
+      const isListPresent = get().lists.find((list) => list.id === listID);
+
+      get().lists.forEach((list) => {
+        console.log(list);
+      });
+
+      if (isListPresent) {
+        console.log("list is already in user's collection");
+        return false;
+      }
+
       const docRef = doc(db, "lists", listID);
       const docSnap = await getDoc(docRef);
 
@@ -121,6 +134,7 @@ export const useList = create<addListProps>((set, get) => ({
       if (docSnap.exists()) {
         const data = docSnap.data();
         const owners: string[] = data.ownersIDs;
+
         if (owners.length === 0 || owners == undefined) {
           deleteDoc(docRef);
         }
@@ -155,7 +169,11 @@ export const useList = create<addListProps>((set, get) => ({
   },
   fetchLists: async () => {
     try {
-      const docSnap = await getDocs(collection(db, "lists"));
+      const docQuery = query(
+        collection(db, "lists"),
+        where("ownersIDs", "array-contains", auth.currentUser?.uid),
+      );
+      const docSnap = await getDocs(docQuery);
       docSnap.forEach((doc) => {
         const currentListData = doc.data();
         const newList: IListData = {
@@ -166,7 +184,6 @@ export const useList = create<addListProps>((set, get) => ({
           ownersIDs: currentListData.ownersIDs,
           productIDs: currentListData.productIDs,
         };
-
         set(() => ({ lists: [...get().lists, newList] }));
       });
     } catch (err: unknown) {

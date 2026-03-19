@@ -11,7 +11,7 @@ import Toast from "react-native-toast-message";
 
 export default function ListElements() {
   const { fetchLists, lists, cleanLists, deleteList } = useList();
-  const { fetchProducts, cleanProducts } = useProduct();
+  const { fetchProducts, cleanProducts, deleteProducts } = useProduct();
   const currentUserList = lists.filter(
     (list) => auth.currentUser?.uid && list.ownersIDs.includes(auth.currentUser.uid),
   );
@@ -19,9 +19,12 @@ export default function ListElements() {
   useEffect(() => {
     fetchLists();
     fetchProducts();
+    console.log(lists);
     return () => {
       cleanProducts();
       cleanLists();
+      console.log(lists);
+      console.log("Cleared");
     };
   }, [fetchLists, cleanLists, fetchProducts, cleanProducts]);
 
@@ -29,6 +32,7 @@ export default function ListElements() {
     rowMap: RowMap<IListData>,
     rowData: ListRenderItemInfo<IListData>,
   ) => {
+    deleteProducts(rowData.item.id);
     deleteList(rowData.item.id);
     rowMap[rowData.item.id].closeRow();
   };

@@ -1,6 +1,15 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
-import { doc, setDoc, updateDoc, arrayUnion, getDocs, collection } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  getDocs,
+  getDoc,
+  collection,
+  writeBatch,
+} from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 
 interface addProductProps {
@@ -16,6 +25,7 @@ interface addProductProps {
   toggleProduct: (id: string) => void;
   postProduct: (productID: string, listID: string | string[]) => Promise<void>;
   fetchProducts: () => Promise<void>;
+  deleteProducts: (listID: string) => Promise<void>;
   cleanProducts: () => void;
 }
 
@@ -98,6 +108,33 @@ export const useProduct = create<addProductProps>((set, get) => ({
       });
     } catch (err: unknown) {
       console.error(`Error with retrieving data from firestore. ${err}`);
+    }
+  },
+  deleteProducts: async (listID) => {
+    try {
+      const listSnap = await getDoc(doc(db, "lists", listID));
+
+      if (listSnap.exists()) {
+        const listData = listSnap.data();
+        const listProducts: string[] = listData.productIDs;
+
+        if (listData.ownersIDs.length === 0) {
+          const batch = writeBatch(db);
+
+          listProducts.forEach((id) => {
+            batch.delete(doc(db, "products", id));
+          });
+          await batch.commit();
+
+          set((state) => ({
+            products: state.products.filter((prod) => !listProducts.includes(prod.id)),
+          }));
+        }
+      } else {
+        console.log("Failed to get list data in deleteProducts function.");
+      }
+    } catch (err: unknown) {
+      console.log(`Error with firebase while deleting the product: ${err}`);
     }
   },
   cleanProducts: () => set(() => ({ products: [] })),
