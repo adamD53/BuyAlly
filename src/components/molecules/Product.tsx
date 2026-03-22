@@ -10,11 +10,16 @@ export function Product({ productID }: IProductProps) {
   const isChecked = useProduct(
     ({ products }) => products.find((prod) => prod.id === productID)?.product.checked,
   );
-  const { toggleProduct } = useProduct();
+  const { toggleProduct, postProductCheckStatus } = useProduct();
   const product = useProduct((state) => state.products.find((p) => p.id === productID));
 
+  const handleCheckProduct = (id: string) => {
+    postProductCheckStatus(id);
+    toggleProduct(id);
+  };
+
   return (
-    <Pressable style={styles.container} onPress={() => toggleProduct(productID)}>
+    <Pressable style={styles.container} onPress={() => handleCheckProduct(productID)}>
       <View style={styles.checkIcon}>
         <Octicons
           name={isChecked ? "check-circle-fill" : "check-circle"}

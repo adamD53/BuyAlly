@@ -22,7 +22,8 @@ interface addProductProps {
   setNote: (note: string) => void;
   addProduct: () => string;
   resetState: () => void;
-  toggleProduct: (id: string) => Promise<void>;
+  toggleProduct: (id: string) => void;
+  postProductCheckStatus: (id: string) => Promise<void>;
   postProduct: (productID: string, listID: string | string[]) => Promise<void>;
   fetchProducts: () => Promise<void>;
   deleteProducts: (listID: string) => Promise<void>;
@@ -63,6 +64,18 @@ export const useProduct = create<addProductProps>((set, get) => ({
   },
   resetState: () => set(() => ({ input: "", quantity: "", note: "" })),
   toggleProduct: async (id) => {
+    set((state) => ({
+      products: state.products.map((prod) =>
+        prod.id === id
+          ? {
+              ...prod,
+              product: { ...prod.product, checked: !prod.product.checked },
+            }
+          : prod,
+      ),
+    }));
+  },
+  postProductCheckStatus: async (id) => {
     try {
       const currentProduct = get().products.find((product) => product.id == id);
       const productDocRef = doc(db, "products", id);
@@ -70,17 +83,6 @@ export const useProduct = create<addProductProps>((set, get) => ({
       await updateDoc(productDocRef, {
         checked: !currentProduct?.product.checked,
       });
-
-      set((state) => ({
-        products: state.products.map((prod) =>
-          prod.id === id
-            ? {
-                ...prod,
-                product: { ...prod.product, checked: !prod.product.checked },
-              }
-            : prod,
-        ),
-      }));
     } catch (err: unknown) {
       console.error(`Error while checking product occured. ${err}`);
     }

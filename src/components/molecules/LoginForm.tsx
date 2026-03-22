@@ -6,16 +6,22 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { router } from "expo-router";
+import { FirebaseError } from "firebase/app";
+import { authErrorMessages, IAuthErrorMessages } from "@/src/data/authErrorMessages";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState<keyof IAuthErrorMessages>();
 
   const signIn = async () => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       console.log(`${user.email} is logged.`);
     } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        setLoginError(err.code as keyof IAuthErrorMessages);
+      }
       console.error(`Error: ${err} `);
     }
   };
@@ -45,6 +51,9 @@ export default function LoginForm() {
           Not yet a member? <Text style={{ ...styles.routeText, color: "#f9f9f9" }}>Sign up</Text>
         </Text>
       </Pressable>
+      {loginError && (
+        <Text style={styles.errorText}>Failed to login. {authErrorMessages[loginError]}</Text>
+      )}
     </View>
   );
 }
@@ -61,5 +70,11 @@ const styles = StyleSheet.create({
   routeText: {
     color: "#999fa2",
     fontSize: 16,
+  },
+  errorText: {
+    margin: 20,
+    color: "#c90000",
+    fontSize: 16,
+    textAlign: "center",
   },
 });

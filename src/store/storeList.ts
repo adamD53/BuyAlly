@@ -31,6 +31,7 @@ interface addListProps {
   addList: () => string;
   addListByID: () => Promise<boolean>;
   deleteList: (listID: string) => Promise<void>;
+  removeOwnerFromList: (listID: string) => Promise<void>;
   postList: (listID: string) => Promise<void>;
   fetchLists: () => Promise<void>;
   addProductToList: (listID: string | string[], productID: string) => void;
@@ -141,6 +142,16 @@ export const useList = create<addListProps>((set, get) => ({
       }
     } catch (err: unknown) {
       console.error(`Error with firebase while deleting list: ${err}`);
+    }
+  },
+  removeOwnerFromList: async (listID) => {
+    try {
+      const docRef = doc(db, "lists", listID);
+      await updateDoc(docRef, {
+        ownersIDs: arrayRemove(auth.currentUser?.uid),
+      });
+    } catch (err: unknown) {
+      console.error(`Error with removing owner from the list. ${err}`);
     }
   },
   addProductToList: (listID, productID) =>
